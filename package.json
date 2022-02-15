@@ -4,7 +4,7 @@
   "description": "segundo projeto realizado no percurso de ensino de node.js da plataforma alura",
   "main": "index.js",
   "scripts": {
-    "start": "node api/index.js",
+    "start": "nodemon api/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
