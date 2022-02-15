@@ -20,6 +20,15 @@ class Supplier {
         this.createdAt = result.createdAt
         this.updatetAt = result.updatetAt
     }
+
+    async load(){
+        const foundSupplier = await SupplierTable.getById(this.id)
+        this.company = foundSupplier.company
+        this.email = foundSupplier.email
+        this.category = foundSupplier.category
+        this.createdAt = foundSupplier.createdAt
+        this.updatetAt = foundSupplier.updatetAt
+    }
 }
 
 module.exports = Supplier
