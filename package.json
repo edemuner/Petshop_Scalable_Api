@@ -19,6 +19,7 @@
   "homepage": "https://github.com/edemuner/alura_api_petshop_2#readme",
   "dependencies": {
     "body-parser": "^1.19.1",
+    "config": "^3.3.7",
     "express": "^4.17.2",
     "mysql2": "^2.3.3",
     "nodemon": "^2.0.15",
