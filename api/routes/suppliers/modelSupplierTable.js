@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize')
 const sequelize = require('../../database')
 
-const colunas = {
+const columns = {
     company: {
         type: Sequelize.STRING,
         allowNull: false
@@ -22,4 +22,4 @@ const options = {
     timestamps:true
 }
 
-module.exports = sequelize.define('supplier', colunas, options)
+module.exports = sequelize.define('supplier', columns, options)
