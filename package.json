@@ -1,0 +1,27 @@
+{
+  "name": "alura_api_petshop_2",
+  "version": "1.0.0",
+  "description": "segundo projeto realizado no percurso de ensino de node.js da plataforma alura",
+  "main": "index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edemuner/alura_api_petshop_2.git"
+  },
+  "author": "Eduardo Demuner",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edemuner/alura_api_petshop_2/issues"
+  },
+  "homepage": "https://github.com/edemuner/alura_api_petshop_2#readme",
+  "dependencies": {
+    "body-parser": "^1.19.1",
+    "express": "^4.17.2",
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.15",
+    "sequelize": "^6.16.1"
+  }
+}
