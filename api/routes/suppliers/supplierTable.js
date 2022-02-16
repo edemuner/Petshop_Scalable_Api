@@ -4,7 +4,7 @@ const NotFound = require('../../errors/NotFound')
 module.exports = {
 
     list(){
-        return Model.findAll()
+        return Model.findAll( {raw : true})
     },
 
     insert(supplier){
