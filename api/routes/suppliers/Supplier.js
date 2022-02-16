@@ -1,3 +1,4 @@
+const supplierTable = require('./supplierTable')
 const SupplierTable = require('./supplierTable')
 
 class Supplier {
@@ -47,6 +48,10 @@ class Supplier {
         }
 
         await SupplierTable.update(this.id, dataToUpdate)
+    }
+
+    async remove(){
+        return supplierTable.remove(this.id)
     }
 }
 

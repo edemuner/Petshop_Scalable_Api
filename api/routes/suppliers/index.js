@@ -43,4 +43,18 @@ router.put('/:supplierId', async (req, res) => {
     }
 })
 
+router.delete('/:supplierId', async (req, res) => {
+    try {
+        const id = req.params.supplierId
+        const supplier = new Supplier({ id: id })
+        await supplier.load()
+        await supplier.remove()
+        res.end()
+    } catch(error) {
+        res.send(JSON.stringify({
+            message: error.message
+        }))
+    }
+})
+
 module.exports = router
