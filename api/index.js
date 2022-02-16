@@ -48,8 +48,8 @@ app.use((error, req, res, next) => {
     
     res.status(status).send(
         serializer.serialize({
-        id: error.idError,
-        message: error.message
+            id: error.idError,
+            message: error.message
         })
     )
 })
