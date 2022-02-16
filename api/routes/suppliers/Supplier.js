@@ -1,5 +1,6 @@
 const supplierTable = require('./supplierTable')
-const SupplierTable = require('./supplierTable')
+const InvalidField = require('../../errors/InvalidField')
+const NotEnoughData = require('../../errors/NotEnoughData')
 
 class Supplier {
 
@@ -12,7 +13,7 @@ class Supplier {
 
     async create() {
         this.validate()
-        const result = await SupplierTable.insert({
+        const result = await supplierTable.insert({
             company: this.company,
             email: this.email,
             category: this.category
@@ -24,7 +25,7 @@ class Supplier {
     }
 
     async load(){
-        const foundSupplier = await SupplierTable.getById(this.id)
+        const foundSupplier = await supplierTable.getById(this.id)
         this.company = foundSupplier.company
         this.email = foundSupplier.email
         this.category = foundSupplier.category
@@ -33,7 +34,7 @@ class Supplier {
     }
 
     async update(){
-        await SupplierTable.getById(this.id)
+        await supplierTable.getById(this.id)
         const fields = ['company', 'email', 'category']
         const dataToUpdate = {}
 
@@ -45,10 +46,10 @@ class Supplier {
         })
 
         if (Object.keys(dataToUpdate).length === 0) {
-            throw new Error('Need more data')
+            throw new NotEnoughData()
         }
 
-        await SupplierTable.update(this.id, dataToUpdate)
+        await supplierTable.update(this.id, dataToUpdate)
     }
 
     remove(){
@@ -62,7 +63,7 @@ class Supplier {
             const value = this[field]
 
             if (typeof value !== 'string' || value.length === 0){
-                throw new Error(`Invalid field: ${field}`)
+                throw new InvalidField(field)
             }
         })
     }
