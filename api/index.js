@@ -6,9 +6,25 @@ const NotFound = require('./errors/NotFound')
 const InvalidField = require('./errors/InvalidField')
 const NotEnoughData = require('./errors/NotEnoughData')
 const NotSuportedValue = require('./errors/NotSupportedValue')
+const acceptedFormats = require('./Serializer').acceptedFormats
 
 
 app.use(bodyparser.json())
+
+app.use((req, res, next) => {
+    let requestedFormat = req.header('Accept')
+
+    if (requestedFormat === '*/*'){
+        requestedFormat = 'application/json'
+    }
+
+    if (acceptedFormats.indexOf(requestedFormat) === -1){
+        res.status(406).end()
+    } else {
+        res.setHeader('Content-Type', requestedFormat)
+        next()
+    }
+})
 
 const router = require('./routes/suppliers')
 app.use('/api/suppliers', router)

@@ -13,3 +13,9 @@ class Serializer{
         throw new NotSuportedValue(this.contentType)
     }
 }
+
+module.exports = {
+    Serializer : Serializer,
+    acceptedFormats : ['application/json']
+    
+}
