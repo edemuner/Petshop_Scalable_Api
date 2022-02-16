@@ -29,6 +29,25 @@ class Supplier {
         this.createdAt = foundSupplier.createdAt
         this.updatetAt = foundSupplier.updatetAt
     }
+
+    async update(){
+        await SupplierTable.getById(this.id)
+        const fields = ['company', 'email', 'category']
+        const dataToUpdate = {}
+
+        fields.forEach((field) => {
+            const value = this[field]
+            if (typeof value === 'string' && value.length > 0){
+                dataToUpdate[field] = value
+            }
+        })
+
+        if (Object.keys(dataToUpdate).length === 0) {
+            throw new Error('Need more data')
+        }
+
+        await SupplierTable.update(this.id, dataToUpdate)
+    }
 }
 
 module.exports = Supplier

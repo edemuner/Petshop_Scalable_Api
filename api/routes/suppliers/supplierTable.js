@@ -20,5 +20,14 @@ module.exports = {
             throw new Error('Supplier not found')
         }
         return found
+    },
+
+    update(id, dataToUpdate){
+        return Model.update(
+            dataToUpdate,
+            {
+                where: { id: id }
+            }
+        )
     }
 }

@@ -25,7 +25,22 @@ router.get('/:supplierId', async (req, res) => {
             message: error.message
         })
     }
+})
+
+router.put('/:supplierId', async (req, res) => {
     
+    try {
+        const id = req.params.supplierId
+        const receivedData = req.body
+        const data = Object.assign({}, receivedData, { id: id })
+        const supplier = new Supplier(data)
+        await supplier.update()
+        res.end()
+    } catch(error) {
+        res.send(JSON.stringify({
+            message: error.message
+        }))
+    }
 })
 
 module.exports = router
