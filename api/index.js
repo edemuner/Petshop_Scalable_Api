@@ -7,6 +7,8 @@ const InvalidField = require('./errors/InvalidField')
 const NotEnoughData = require('./errors/NotEnoughData')
 const NotSuportedValue = require('./errors/NotSupportedValue')
 const acceptedFormats = require('./Serializer').acceptedFormats
+const ErrorSerializer = require('./Serializer').ErrorSerializer
+
 
 
 app.use(bodyparser.json())
@@ -40,9 +42,16 @@ app.use((error, req, res, next) => {
     } else if (error instanceof NotSuportedValue){
         status = 406
     }
-    res.status(status).json({
+    const serializer = new ErrorSerializer(
+        res.getHeader('Content-Type')
+    )
+    
+    res.status(status).send(
+        serializer.serialize({
+        id: error.idError,
         message: error.message
-    })
+        })
+    )
 })
 
 

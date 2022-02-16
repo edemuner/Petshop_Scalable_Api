@@ -3,6 +3,7 @@ const SupplierTable = require('./supplierTable')
 const Supplier = require('./Supplier')
 const SupplierSerializer = require('../../Serializer').SupplierSerializer
 
+
 router.get('/', async (req, res) => {
     const results = await SupplierTable.list()
     const serializer = new SupplierSerializer(res.getHeader('Content-Type'))
