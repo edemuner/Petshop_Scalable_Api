@@ -12,9 +12,9 @@ router.post('/', async (req, res) => {
         const receivedData = req.body
         const supplier = new Supplier(receivedData)
         await supplier.create()
-        res.json(supplier)
+        res.status(201).json(supplier)
     } catch(error){
-        res.json({
+        res.status(400).json({
             message : error.message
         })
     }
@@ -27,7 +27,7 @@ router.get('/:supplierId', async (req, res) => {
         await supplier.load()
         res.json(supplier)
     } catch (error) {
-        res.json({
+        res.status(404).json({
             message: error.message
         })
     }
@@ -43,7 +43,7 @@ router.put('/:supplierId', async (req, res) => {
         await supplier.update()
         res.end()
     } catch(error) {
-        res.json({
+        res.status(400).json({
             message: error.message
         })
     }
@@ -57,7 +57,7 @@ router.delete('/:supplierId', async (req, res) => {
         await supplier.remove()
         res.end()
     } catch(error) {
-        res.json({
+        res.status(404).json({
             message: error.message
         })
     }
