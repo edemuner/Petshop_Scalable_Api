@@ -5,6 +5,7 @@ const config = require('config')
 const NotFound = require('./errors/NotFound')
 const InvalidField = require('./errors/InvalidField')
 const NotEnoughData = require('./errors/NotEnoughData')
+const NotSuportedValue = require('./errors/NotSupportedValue')
 
 
 app.use(bodyparser.json())
@@ -20,7 +21,9 @@ app.use((error, req, res, next) => {
     } else if (error instanceof InvalidField || 
                 error instanceof NotEnoughData){
         status = 400
-    } 
+    } else if (error instanceof NotSuportedValue){
+        status = 406
+    }
     res.status(status).json({
         message: error.message
     })
