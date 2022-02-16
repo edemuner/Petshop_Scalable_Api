@@ -5,7 +5,6 @@ const SupplierSerializer = require('../../Serializer').SupplierSerializer
 
 router.get('/', async (req, res) => {
     const results = await SupplierTable.list()
-    console.log(results)
     const serializer = new SupplierSerializer(res.getHeader('Content-Type'))
     res.send(
         serializer.serialize(results)
@@ -32,7 +31,9 @@ router.get('/:supplierId', async (req, res, next) => {
         const id = req.params.supplierId
         const supplier = new Supplier({ id: id })
         await supplier.load()
-        const serializer = new SupplierSerializer(res.getHeader('Content-Type'))
+        const serializer = new SupplierSerializer(
+            res.getHeader('Content-Type'), 
+            ['email', 'createdAt', 'updatedAt'])
         res.send(
             serializer.serialize(supplier)
         )

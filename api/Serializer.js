@@ -37,10 +37,11 @@ class Serializer{
 
 class SupplierSerializer extends Serializer {
 
-    constructor(contentType){
+    constructor(contentType, extraFields){
         super()
         this.contentType = contentType
         this.publicFields = ['id', 'company', 'category']
+                        .concat(extraFields || [])
 
     }
 }
