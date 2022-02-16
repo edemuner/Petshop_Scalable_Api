@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const SupplierTable = require('./supplierTable')
 const Supplier = require('./Supplier')
+const NotFound = require('../../errors/NotFound')
 
 router.get('/', async (req, res) => {
     const results = await SupplierTable.list()
@@ -33,7 +34,7 @@ router.get('/:supplierId', async (req, res) => {
     }
 })
 
-router.put('/:supplierId', async (req, res) => {
+router.put('/:supplierId', async (req, res, next) => {
     
     try {
         const id = req.params.supplierId
@@ -43,9 +44,7 @@ router.put('/:supplierId', async (req, res) => {
         await supplier.update()
         res.end()
     } catch(error) {
-        res.status(400).json({
-            message: error.message
-        })
+        next(error)
     }
 })
 
