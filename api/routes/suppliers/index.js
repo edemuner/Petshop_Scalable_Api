@@ -8,10 +8,16 @@ router.get('/', async (req, res) => {
 })
 
 router.post('/', async (req, res) => {
-    const receivedData = req.body
-    const supplier = new Supplier(receivedData)
-    await supplier.create()
-    res.json(supplier)
+    try{
+        const receivedData = req.body
+        const supplier = new Supplier(receivedData)
+        await supplier.create()
+        res.json(supplier)
+    } catch(error){
+        res.json({
+            message : error.message
+        })
+    }
 })
 
 router.get('/:supplierId', async (req, res) => {
@@ -37,9 +43,9 @@ router.put('/:supplierId', async (req, res) => {
         await supplier.update()
         res.end()
     } catch(error) {
-        res.send(JSON.stringify({
+        res.json({
             message: error.message
-        }))
+        })
     }
 })
 
@@ -51,9 +57,9 @@ router.delete('/:supplierId', async (req, res) => {
         await supplier.remove()
         res.end()
     } catch(error) {
-        res.send(JSON.stringify({
+        res.json({
             message: error.message
-        }))
+        })
     }
 })
 
