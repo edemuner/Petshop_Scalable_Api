@@ -13,6 +13,8 @@ const ErrorSerializer = require('./Serializer').ErrorSerializer
 
 app.use(bodyparser.json())
 
+// this middleware checks for the accepted content type
+// and sends a 406 error righ away if it's not in acceptedFormats
 app.use((req, res, next) => {
     let requestedFormat = req.header('Accept')
 
@@ -28,9 +30,11 @@ app.use((req, res, next) => {
     }
 })
 
+// main router
 const router = require('./routes/suppliers')
 app.use('/api/suppliers', router)
 
+// error handler
 app.use((error, req, res, next) => {
     let status = 500
 
