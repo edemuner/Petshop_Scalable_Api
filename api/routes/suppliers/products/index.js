@@ -7,14 +7,18 @@ router.get('/', async (req, res) => {
     res.json(products)
 })
 
-router.post('/', async (req, res) => {
-    const supplierId = req.params.supplierId
-    const body = req.body
-    const data = Object.assign({}, body, { supplier: supplierId})
-
-    const product = new Product(data)
-    await product.create()
-    res.status(201).json(product)
+router.post('/', async (req, res, next) => {
+    try{
+        const supplierId = req.params.supplierId
+        const body = req.body
+        const data = Object.assign({}, body, { supplier: supplierId})
+    
+        const product = new Product(data)
+        await product.create()
+        res.status(201).json(product)
+    } catch(error) {
+        next(error)
+    }   
 
 })
 

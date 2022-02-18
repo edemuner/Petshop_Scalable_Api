@@ -10,7 +10,18 @@ class Product {
         this.supplier = supplier
     }
 
+    validate(){
+        if (typeof this.title !== 'string' || this.title.length === 0){
+            throw new Error('Title field is invalid')
+        }
+
+        if(typeof this.price !== 'number' || this.price === 0){
+            throw new Error('Price field is invalid')
+        }
+    }
+
     async create(){
+        this.validate()
         const result = await table.insert({
             title: this.title,
             price: this.price,
