@@ -69,7 +69,19 @@ router.delete('/:supplierId', async (req, res, next) => {
     }
 })
 
+const checkSupplier = async (req, res, next) => {
+    try {
+        const id = req.params.supplierId
+        const supplier = new Supplier({ id: id })
+        await supplier.load()
+        req.supplier = supplier
+        next()
+    } catch(error) {
+        next(error)
+    }
+}
+
 const productRouter = require('./products')
-router.use('/:supplierId/products', productRouter)
+router.use('/:supplierId/products', checkSupplier, productRouter)
 
 module.exports = router
