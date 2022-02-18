@@ -22,6 +22,10 @@ class Product {
         this.createdAt = result.createdAt
         this.updatedAt = result.updatedAt
     }
+
+    delete(){
+        return table.delete(this.id, this.supplier)
+    }
 }
 
 module.exports = Product
