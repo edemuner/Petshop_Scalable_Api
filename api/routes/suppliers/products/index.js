@@ -63,6 +63,28 @@ router.get('/:productId', async (req, res, next) => {
     } catch(error){
         next(error)
     }
+    
+})
+
+router.put('/:productId', async (req, res, next) => {
+    try{
+        const data = Object.assign(
+            {},
+            req.body,
+            {
+                id: req.params.productId,
+                supplier: req.supplier.id
+            }
+        )
+    
+        const product = new Product(data)
+        await product.update()
+        res.status(204).end()
+    } catch(error) {
+        next(error)
+    }
+
+
 })
 
 module.exports = router

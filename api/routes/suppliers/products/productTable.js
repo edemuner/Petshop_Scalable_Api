@@ -35,5 +35,14 @@ module.exports = {
             throw new Error('Product not found')
         }        
         return found
+    },
+
+    update(productData, dataToUpdate){
+        return Model.update(
+            dataToUpdate,
+            {
+                where: productData
+            }
+        )
     }
 }
