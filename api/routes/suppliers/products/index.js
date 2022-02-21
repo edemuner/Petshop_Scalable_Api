@@ -32,4 +32,20 @@ router.delete('/:productId', async (req, res) => {
     res.status(204).end()
 })
 
+router.get('/:productId', async (req, res, next) => {
+    
+    try{
+        const data = {
+            id: req.params.productId,
+            supplier: req.supplier
+        }
+    
+        const product = new Product(data)
+        await product.load()
+        res.json(product)
+    } catch(error){
+        next(error)
+    }
+})
+
 module.exports = router
