@@ -24,11 +24,11 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/:productId', async (req, res) => {
     const data = {
-        productId: req.params.productId,
-        supplierId: req.supplier.id
+        id: req.params.productId,
+        supplier: req.supplier.id
     }
     const product = new Product(data)
-    await product.delete(productId)
+    await product.delete()
     res.status(204).end()
 })
 

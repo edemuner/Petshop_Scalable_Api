@@ -3,7 +3,9 @@ const SupplierTable = require('./supplierTable')
 const Supplier = require('./Supplier')
 const SupplierSerializer = require('../../Serializer').SupplierSerializer
 
-
+// the serialize call checks the accepted content type for the response
+// if it is among the supported formats, the method returns the data for the client as requested
+// the same goes for the post and other http methods here
 router.get('/', async (req, res) => {
     const results = await SupplierTable.list()
     const serializer = new SupplierSerializer(res.getHeader('Content-Type'))
@@ -69,6 +71,9 @@ router.delete('/:supplierId', async (req, res, next) => {
     }
 })
 
+// this function checks if the supplier exists
+// it is used in the products search
+// replaces the http supplier field for the proper supplier object
 const checkSupplier = async (req, res, next) => {
     try {
         const id = req.params.supplierId
@@ -81,6 +86,8 @@ const checkSupplier = async (req, res, next) => {
     }
 }
 
+// the router for products, it is inside suppliers because supplier is a foreign key to product
+// since each product has a supplier (one to many)
 const productRouter = require('./products')
 router.use('/:supplierId/products', checkSupplier, productRouter)
 
