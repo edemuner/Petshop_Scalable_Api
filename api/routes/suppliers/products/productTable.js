@@ -6,7 +6,8 @@ module.exports = {
         return Model.findAll({
             where: {
                 supplier: supplierId
-            }
+            },
+            raw: true
         })
     },
 

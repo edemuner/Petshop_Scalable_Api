@@ -1,10 +1,16 @@
 const router = require('express').Router({ mergeParams: true })
 const Table = require('./productTable')
 const Product = require('./Product')
+const Serializer = require('../../../Serializer').productSerializer
 
 router.get('/', async (req, res) => {
     const products = await Table.list(req.supplier.id)
-    res.json(products)
+    const serializer = new Serializer(
+        res.getHeader('Content-Type')
+    )
+    res.send(
+        serializer.serialize(products)
+    )
 })
 
 router.post('/', async (req, res, next) => {
@@ -15,7 +21,12 @@ router.post('/', async (req, res, next) => {
     
         const product = new Product(data)
         await product.create()
-        res.status(201).json(product)
+        const serializer = new Serializer(
+            res.getHeader('Content-Type')
+        )
+        res.status(201).send(
+            serializer.serialize(product)
+        )
     } catch(error) {
         next(error)
     }   
@@ -42,7 +53,13 @@ router.get('/:productId', async (req, res, next) => {
     
         const product = new Product(data)
         await product.load()
-        res.json(product)
+        const serializer = new Serializer(
+            res.getHeader('Content-Type'),
+            ['price', 'stock', 'supplier', 'createdAt', 'updatedAt']
+        )
+        res.send(
+            serializer.serialize(product)
+        )
     } catch(error){
         next(error)
     }
