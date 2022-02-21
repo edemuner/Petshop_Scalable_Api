@@ -74,6 +74,15 @@ class Product {
             dataToUpdate
         )
     }
+
+    reduceStock(){
+        return table.subtract(
+            this.id,
+            this.supplier.id,
+            'stock',
+            this.stock
+        )
+    }
 }
 
 module.exports = Product

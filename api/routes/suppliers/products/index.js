@@ -83,7 +83,21 @@ router.put('/:productId', async (req, res, next) => {
     } catch(error) {
         next(error)
     }
+})
 
+router.post('/:productId/reduce-stock', async (req, res, next) => {
+    try {
+        const product =  new Product({
+            id: req.params.productId,
+            supplier: req.supplier
+        })
+        await product.load()
+        product.stock -= req.body.amount
+        await product.reduceStock()
+        res.status(204).end()
+    } catch(error) {
+        next(error)
+    }
 
 })
 
