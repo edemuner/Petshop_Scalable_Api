@@ -30,6 +30,11 @@ app.use((req, res, next) => {
     }
 })
 
+app.use((req, res, next) => {
+    res.set('Access-Control-Allow-Origin', '*')
+    next()
+})
+
 // main router
 const router = require('./routes/suppliers')
 app.use('/api/suppliers', router)
