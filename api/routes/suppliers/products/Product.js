@@ -69,7 +69,7 @@ class Product {
         return table.update(
             {
                 id: this.id,
-                supplier: this.supplier
+                supplier: this.supplier.id
             },
             dataToUpdate
         )

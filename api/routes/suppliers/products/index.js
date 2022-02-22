@@ -24,6 +24,10 @@ router.post('/', async (req, res, next) => {
         const serializer = new Serializer(
             res.getHeader('Content-Type')
         )
+        const timestamp = (new Date(product.updatedAt)).getTime()
+        res.set('Last-Modified', timestamp)
+        res.set('X-Powered-By', 'Eduardo Demuner')
+        res.set('Location', `/api/suppliers/${product.supplier}/products/${product.id}`)
         res.status(201).send(
             serializer.serialize(product)
         )
@@ -57,6 +61,9 @@ router.get('/:productId', async (req, res, next) => {
             res.getHeader('Content-Type'),
             ['price', 'stock', 'supplier', 'createdAt', 'updatedAt']
         )
+        const timestamp = (new Date(product.updatedAt)).getTime()
+        res.set('X-Powered-By', 'Eduardo Demuner')
+        res.set('Last-Modified', timestamp)
         res.send(
             serializer.serialize(product)
         )
@@ -73,12 +80,16 @@ router.put('/:productId', async (req, res, next) => {
             req.body,
             {
                 id: req.params.productId,
-                supplier: req.supplier.id
+                supplier: req.supplier
             }
         )
     
         const product = new Product(data)
         await product.update()
+        await product.load()
+        const timestamp = (new Date(product.updatedAt)).getTime()
+        res.set('Last-Modified', timestamp)
+        res.set('X-Powered-By', 'Eduardo Demuner')
         res.status(204).end()
     } catch(error) {
         next(error)
@@ -94,6 +105,10 @@ router.post('/:productId/reduce-stock', async (req, res, next) => {
         await product.load()
         product.stock -= req.body.amount
         await product.reduceStock()
+        await product.load()
+        const timestamp = (new Date(product.updatedAt)).getTime()
+        res.set('Last-Modified', timestamp)
+        res.set('X-Powered-By', 'Eduardo Demuner')
         res.status(204).end()
     } catch(error) {
         next(error)
