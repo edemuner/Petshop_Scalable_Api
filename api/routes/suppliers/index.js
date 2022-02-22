@@ -3,6 +3,12 @@ const SupplierTable = require('./supplierTable')
 const Supplier = require('./Supplier')
 const SupplierSerializer = require('../../Serializer').SupplierSerializer
 
+router.options('/', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, POST')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204).end()
+})
+
 // the serialize call checks the accepted content type for the response
 // if it is among the supported formats, the method returns the data for the client as requested
 // the same goes for the post and other http methods here
@@ -29,6 +35,12 @@ router.post('/', async (req, res, next) => {
     }
 })
 
+router.options('/:supplierId', (req, res) => {
+    res.set('Access-Control-Allow-Methods', 'GET, PUT, DELETE')
+    res.set('Access-Control-Allow-Headers', 'Content-Type')
+    res.status(204).end()
+})
+
 router.get('/:supplierId', async (req, res, next) => {
     try {
         const id = req.params.supplierId
@@ -53,7 +65,7 @@ router.put('/:supplierId', async (req, res, next) => {
         const data = Object.assign({}, receivedData, { id: id })
         const supplier = new Supplier(data)
         await supplier.update()
-        res.end()
+        res.status(204).end()
     } catch(error) {
         next(error)
     }
