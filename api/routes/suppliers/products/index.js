@@ -73,6 +73,24 @@ router.get('/:productId', async (req, res, next) => {
     
 })
 
+router.head('/:productId', async (req, res) => {
+    try{
+        const data = {
+            id: req.params.productId,
+            supplier: req.supplier
+        }
+    
+        const product = new Product(data)
+        await product.load()
+        const timestamp = (new Date(product.updatedAt)).getTime()
+        res.set('X-Powered-By', 'Eduardo Demuner')
+        res.set('Last-Modified', timestamp)
+        res.status(200).end()
+    } catch(error){
+        next(error)
+    }
+})
+
 router.put('/:productId', async (req, res, next) => {
     try{
         const data = Object.assign(
