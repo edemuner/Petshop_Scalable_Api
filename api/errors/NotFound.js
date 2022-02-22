@@ -1,7 +1,7 @@
 class NotFound extends Error {
 
-    constructor(){
-        super('Supplier not found')
+    constructor(field){
+        super(`${field} not found`)
         this.name = 'NotFound'
         this.idError = 0
     }

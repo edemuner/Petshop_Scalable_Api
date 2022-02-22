@@ -1,4 +1,8 @@
 const table = require('./productTable')
+const NotEnoughData = require('../../../errors/NotEnoughData')
+const InvalidField = require('../../../errors/InvalidField')
+
+
 
 class Product {
 
@@ -12,11 +16,11 @@ class Product {
 
     validate(){
         if (typeof this.title !== 'string' || this.title.length === 0){
-            throw new Error('Title field is invalid')
+            throw new InvalidField('Title')
         }
 
         if(typeof this.price !== 'number' || this.price === 0){
-            throw new Error('Price field is invalid')
+            throw new InvalidField('Price')
         }
     }
 
@@ -63,7 +67,7 @@ class Product {
         }
 
         if (Object.keys(dataToUpdate).length === 0){
-            throw new Error('No data to update')
+            throw new NotEnoughData()
         }
 
         return table.update(

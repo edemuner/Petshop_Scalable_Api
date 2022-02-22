@@ -1,5 +1,6 @@
 const Model = require('./productTableModel')
 const instance = require('../../../database')
+const NotFound = require('../../../errors/NotFound')
 
 module.exports = {
 
@@ -33,7 +34,7 @@ module.exports = {
         })
 
         if (!found){
-            throw new Error('Product not found')
+            throw new NotFound('Product')
         }        
         return found
     },
