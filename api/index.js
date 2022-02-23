@@ -39,6 +39,10 @@ app.use((req, res, next) => {
 const router = require('./routes/suppliers')
 app.use('/api/suppliers', router)
 
+//v2 router, which doesn't show company in response to getAll
+const v2Router = require('./routes/suppliers/routes.v2')
+app.use('/api/v2/suppliers', v2Router)
+
 // error handler
 app.use((error, req, res, next) => {
     let status = 500
