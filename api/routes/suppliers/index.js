@@ -67,6 +67,9 @@ router.put('/:supplierId', async (req, res, next) => {
         const id = req.params.supplierId
         const receivedData = req.body
         const data = Object.assign({}, receivedData, { id: id })
+
+        // first it creates a new Supplier object with the new data
+        // then it updates the database based on the object attributes
         const supplier = new Supplier(data)
         await supplier.update()
         res.status(204).end()

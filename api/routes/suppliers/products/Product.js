@@ -14,6 +14,7 @@ class Product {
         this.supplier = supplier
     }
 
+    // it doesn't validate empty non strings, non numbers and empty strings and 0 numbers
     validate(){
         if (typeof this.title !== 'string' || this.title.length === 0){
             throw new InvalidField('Title')
@@ -42,6 +43,7 @@ class Product {
         return table.delete(this.id, this.supplier)
     }
 
+    // as in Suppliers, it loads the object attributes from database, based on id
     async load(){
         const product = await table.getById(this.id, this.supplier.id)
         this.title = product.title
@@ -52,6 +54,11 @@ class Product {
     }
 
     update(){
+        // the object is created with the new data, so this method validates the
+        // object attributes before inserting it on an object to be returned
+        // if dataToUpdate is empty, no data was passed to update
+        // and it throws an error
+
         const dataToUpdate = {}
 
         if (typeof this.title === 'string' && this.title.length > 0){

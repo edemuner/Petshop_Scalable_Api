@@ -12,7 +12,7 @@ class Supplier {
     }
 
     async create() {
-        this.validate()
+        this.validate() // throws error if not valid
         const result = await supplierTable.insert({
             company: this.company,
             email: this.email,
@@ -24,6 +24,8 @@ class Supplier {
         this.updatetAt = result.updatetAt
     }
 
+    // this method find the supplier from database by id and get the other
+    // attributes based on the loaded database info
     async load(){
         const foundSupplier = await supplierTable.getById(this.id)
         this.company = foundSupplier.company
@@ -34,17 +36,21 @@ class Supplier {
     }
 
     async update(){
-        await supplierTable.getById(this.id)
+        await supplierTable.getById(this.id) // throws error if not found (error instanciated in supplierTable)
         const fields = ['company', 'email', 'category']
         const dataToUpdate = {}
 
         fields.forEach((field) => {
             const value = this[field]
+            
+            // for each field, it gets the corresponding object attribute
+            // and check if it fits for being updated
             if (typeof value === 'string' && value.length > 0){
                 dataToUpdate[field] = value
             }
         })
 
+        // if anything is passed to be updated
         if (Object.keys(dataToUpdate).length === 0) {
             throw new NotEnoughData()
         }
@@ -56,6 +62,8 @@ class Supplier {
         return supplierTable.remove(this.id)
     }
 
+    // this function checks if each field in suppliers fits the correct parameters
+    // ir serves the create method, but the other methods have some inner validations as well
     validate(){
         const fields = ['company', 'email', 'category']
 
